@@ -1,0 +1,9 @@
+.app-header {
+    text-align: center;
+}
+
+.app-game {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
