@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Rect } from '../rect';
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
