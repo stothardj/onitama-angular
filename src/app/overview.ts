@@ -1,15 +1,22 @@
-import { TitleScreen } from './title-screen';
+import { TitleScreen, TitleScreenEvents } from './title-screen';
 import { Board } from './board';
 import { CardSlot } from './card-slot';
-import { Game } from './game';
-import { VictoryScreen } from './victory-screen';
+import { Game, GameEvents } from './game';
+import { VictoryScreen, VictoryScreenEvents } from './victory-screen';
+import { RED, BLUE } from './constants';
+import { getCards } from './cards';
 
 export class Overview {
-    constructor() {
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+    
+    constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+	this.canvas = canvas;
+	this.ctx = ctx;
     }
 
     displayTitle() {
-	const titleScreen = new TitleScreen();
+	const titleScreen = new TitleScreen(this.canvas, this.ctx);
 	titleScreen.draw();
 	titleScreen.addEventListeners();
 	titleScreen.eventTarget.listen(() => {
@@ -19,19 +26,19 @@ export class Overview {
     }
 
     startGame() {
-	const board = new Board(20, 100, 350);
+	const board = new Board(this.ctx, 20, 100, 350);
 	board.initPieces();
 
 	const cardSlots = [
-	    new CardSlot(400, 20, RED),
-	    new CardSlot(600, 20, RED),
-	    new CardSlot(500, 220, null),
-	    new CardSlot(400, 460, BLUE),
-	    new CardSlot(600, 460, BLUE),
+	    new CardSlot(this.ctx, 400, 20, RED),
+	    new CardSlot(this.ctx, 600, 20, RED),
+	    new CardSlot(this.ctx, 500, 220, null),
+	    new CardSlot(this.ctx, 400, 460, BLUE),
+	    new CardSlot(this.ctx, 600, 460, BLUE),
 	];
-	const cards = getCards();
+	const cards = getCards(this.ctx);
 
-	const game = new Game(board, cardSlots, RED);
+	const game = new Game(this.canvas, this.ctx, board, cardSlots, RED);
 	game.dealCards(cards);
 	game.draw();
 	game.addEventListeners();
@@ -43,7 +50,7 @@ export class Overview {
     }
 
     displayVictory(winner) {
-	const victoryScreen = new VictoryScreen(winner);
+	const victoryScreen = new VictoryScreen(this.canvas, this.ctx, winner);
 	victoryScreen.draw();
 	victoryScreen.addEventListeners();
 	victoryScreen.eventTarget.listen(() => {

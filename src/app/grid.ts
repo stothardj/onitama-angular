@@ -2,13 +2,15 @@ import { Coord } from './coord';
 import { Rect } from './rect';
 
 export class Grid {
+    ctx: CanvasRenderingContext2D;
     x: number;
     y: number;
     size: number;
     cells: number;
     cellSize: number;
 
-    constructor(x: number, y: number, size: number, cells: number) {
+    constructor(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, cells: number) {
+	this.ctx = ctx;
 	this.x = x;
 	this.y = y;
 	this.size = size;
@@ -39,15 +41,15 @@ export class Grid {
 
     draw() {
 	for (let i=1; i<this.cells; i++) {
-	    ctx.beginPath();
-	    ctx.moveTo(this.canvasX(i), this.y);
-	    ctx.lineTo(this.canvasX(i), this.y + this.size);
-	    ctx.stroke();
-	    ctx.beginPath();
-	    ctx.moveTo(this.x, this.canvasY(i));
-	    ctx.lineTo(this.x + this.size, this.canvasY(i));
-	    ctx.stroke();
+	    this.ctx.beginPath();
+	    this.ctx.moveTo(this.canvasX(i), this.y);
+	    this.ctx.lineTo(this.canvasX(i), this.y + this.size);
+	    this.ctx.stroke();
+	    this.ctx.beginPath();
+	    this.ctx.moveTo(this.x, this.canvasY(i));
+	    this.ctx.lineTo(this.x + this.size, this.canvasY(i));
+	    this.ctx.stroke();
 	}
-	ctx.strokeRect(this.x, this.y, this.size, this.size);
+	this.ctx.strokeRect(this.x, this.y, this.size, this.size);
     }
 }

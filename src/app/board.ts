@@ -1,7 +1,12 @@
 import { EventTarget } from './event-target';
 import { Grid } from './grid';
 import { Piece } from './piece';
+import { Master } from './master';
+import { Disciple } from './disciple';
 import { Coord } from './coord';
+import { ClickTarget } from './click-target';
+import { Rect } from './rect';
+import { BOARD_SIZE, RED, BLUE, SELECTED_COLOR } from './constants';
 
 export const BoardEvents = {
     BOARD_SELECTED: 'board-selected',
@@ -9,7 +14,8 @@ export const BoardEvents = {
 };
 
 export class Board {
-    pieces: Map;
+    ctx: CanvasRenderingContext2D;
+    pieces: Map<number, Piece>;
     x: number;
     y: number;
     size: number;
@@ -17,12 +23,13 @@ export class Board {
     eventTarget: EventTarget;
     destinationMarker: Coord;
     
-    constructor(x: number, y: number, size: number) {
+    constructor(ctx: CanvasRenderingContext2D, x: number, y: number, size: number) {
+	this.ctx = ctx;
 	this.pieces = new Map();
 	this.x = x;
 	this.y = y;
 	this.size = size;
-	this.grid = new Grid(x, y, size, BOARD_SIZE);
+	this.grid = new Grid(this.ctx, x, y, size, BOARD_SIZE);
 	this.eventTarget = new EventTarget();
 	this.destinationMarker = null;
     }
@@ -31,12 +38,12 @@ export class Board {
 	this.pieces.clear();
 	const middle = Math.floor(BOARD_SIZE / 2);
 	const bottom = BOARD_SIZE - 1;
-	this.addPiece(new Coord(middle, 0), new Master(RED));
-	this.addPiece(new Coord(middle, bottom), new Master(BLUE));
+	this.addPiece(new Coord(middle, 0), new Master(this.ctx, RED));
+	this.addPiece(new Coord(middle, bottom), new Master(this.ctx, BLUE));
 	for (let i=0; i<BOARD_SIZE; i++) {
 	    if (i == middle) continue;
-	    this.addPiece(new Coord(i, 0), new Disciple(RED));
-	    this.addPiece(new Coord(i, bottom), new Disciple(BLUE));
+	    this.addPiece(new Coord(i, 0), new Disciple(this.ctx, RED));
+	    this.addPiece(new Coord(i, bottom), new Disciple(this.ctx, BLUE));
 	}
     }
 
@@ -57,14 +64,14 @@ export class Board {
     }
 
     draw() {
-	ctx.lineWidth = 1;
-	ctx.strokeStyle = '#000000';
+	this.ctx.lineWidth = 1;
+	this.ctx.strokeStyle = '#000000';
 	this.grid.draw();
 
 	if (this.destinationMarker) {
-	    ctx.fillStyle = SELECTED_COLOR;
+	    this.ctx.fillStyle = SELECTED_COLOR;
 	    const rect = this.grid.canvasRect(this.destinationMarker);
-	    ctx.fillRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+	    this.ctx.fillRect(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 	}
 
 	for (const [coordKey, piece] of this.pieces) {

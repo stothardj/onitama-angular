@@ -1,14 +1,19 @@
-import { Board } from './board';
+import { Board, BoardEvents } from './board';
 import { Card } from './card';
-import { CardSlot } from './card-slot';
+import { CardSlot, CardSlotEvents } from './card-slot';
 import { Coord } from './coord';
 import { EventTarget } from './event-target';
+import { nextTurn, registerClick } from './util';
+import { Master } from './master';
+import { RED } from './constants';
 
 export const GameEvents = {
     GAME_WON: 'game-won',
 };
 
 export class Game {
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
     board: Board;
     cardSlots: CardSlot[];
     turn: string;
@@ -16,8 +21,11 @@ export class Game {
     selectedPieceCoord: Coord;
     selectedCardSlot: CardSlot;
     eventTarget: EventTarget;
+    clickListener: (Event) => void;
 
-    constructor(board: Board, cardSlots: CardSlot[], turn: boolean) {
+    constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, board: Board, cardSlots: CardSlot[], turn: string) {
+	this.canvas = canvas;
+	this.ctx = ctx;
 	this.board = board;
 	this.cardSlots = cardSlots;
 	this.turn = turn;
@@ -45,7 +53,7 @@ export class Game {
     }
 
     draw() {
-	ctx.clearRect(0, 0, WIDTH, HEIGHT);
+	this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	this.board.draw();
 	for (const cardSlot of this.cardSlots) {
 	    cardSlot.draw(this.turn);
@@ -53,11 +61,11 @@ export class Game {
     }
 
     addEventListeners() {
-	canvas.addEventListener('click', this.clickListener);
+	this.canvas.addEventListener('click', this.clickListener);
     }
 
     removeEventListeners() {
-	canvas.removeEventListener('click', this.clickListener);
+	this.canvas.removeEventListener('click', this.clickListener);
     }
 
     getSelectedPiece() {

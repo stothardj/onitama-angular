@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
-import { Rect } from '../rect';
+import { Overview } from '../overview';
 
 @Component({
   selector: 'app-game',
@@ -8,6 +8,7 @@ import { Rect } from '../rect';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
+    @ViewChild('gameCanvas') gameCanvas: ElementRef;
 
     constructor() { }
 
@@ -15,4 +16,10 @@ export class GameComponent implements OnInit {
 	console.log('game on');
     }
 
+    ngAfterViewInit() {
+	const canvas = (<HTMLCanvasElement>this.gameCanvas.nativeElement);
+	const ctx = canvas.getContext('2d');
+	const overview = new Overview(canvas, ctx);
+	overview.run();
+    }
 }

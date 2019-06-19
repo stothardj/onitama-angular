@@ -1,3 +1,6 @@
+import { Move } from './move';
+import { BOARD_SIZE } from './constants';
+
 export class Coord {
     x: number;
     y: number;

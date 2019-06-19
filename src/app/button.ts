@@ -7,12 +7,14 @@ export const ButtonEvents = {
 };
 
 export class Button {
+    ctx: CanvasRenderingContext2D;
     text: string;
     rect: Rect;
     eventTarget: EventTarget;
     clickTargets: ClickTarget[];
     
-    constructor(text: string, rect: Rect) {
+    constructor(ctx: CanvasRenderingContext2D, text: string, rect: Rect) {
+	this.ctx = ctx;
 	this.text = text;
 	this.rect = rect;
 
@@ -26,13 +28,13 @@ export class Button {
     }
 
     draw() {
-	ctx.fillStyle = '#333333';
-	ctx.fillRect(this.rect.left, this.rect.top, this.rect.width, this.rect.height);
-	ctx.fillStyle = '#FFFFFF';
-	ctx.font = '30px serif';
-	ctx.textBaseline = 'middle';
-	ctx.textAlign = 'center';
-	ctx.fillText(this.text, this.rect.centerX, this.rect.centerY);
+	this.ctx.fillStyle = '#333333';
+	this.ctx.fillRect(this.rect.left, this.rect.top, this.rect.width, this.rect.height);
+	this.ctx.fillStyle = '#FFFFFF';
+	this.ctx.font = '30px serif';
+	this.ctx.textBaseline = 'middle';
+	this.ctx.textAlign = 'center';
+	this.ctx.fillText(this.text, this.rect.centerX, this.rect.centerY);
     }
 
     getClickTargets() {

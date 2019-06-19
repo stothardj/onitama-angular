@@ -1,23 +1,27 @@
 import { ClickTarget } from './click-target';
+import { registerClick } from './util';
 
 interface Clickable {
     getClickTargets: () => ClickTarget[];
 }
 
 export class Screen {
+    canvas: HTMLCanvasElement;
+    clickListener: () => void;
     clickables: Clickable[];
     
-    constructor() {
+    constructor(canvas: HTMLCanvasElement) {
+	this.canvas = canvas;
 	this.clickListener = registerClick.bind(this);
 	this.clickables = [];
     }
     
     addEventListeners() {
-	canvas.addEventListener('click', this.clickListener);
+	this.canvas.addEventListener('click', this.clickListener);
     }
 
     removeEventListeners() {
-	canvas.removeEventListener('click', this.clickListener);
+	this.canvas.removeEventListener('click', this.clickListener);
     }
 
     addClickable(child) {
