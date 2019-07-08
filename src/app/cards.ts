@@ -45,7 +45,7 @@ export const CARDS: Record<string, CardDef[]> = {
 	      {'down': 1}],
     'crane': [{'left': 1, 'down': 1},
 	      {'up': 1},
-	      {'right': 1, 'down': 1}]
+	      {'right': 1, 'down': 1}],
     'boar': [{'left': 1},
 	     {'up': 1},
 	     {'right': 1}],
