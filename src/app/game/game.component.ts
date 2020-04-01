@@ -8,7 +8,7 @@ import { Overview } from '../overview';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-    @ViewChild('gameCanvas') gameCanvas: ElementRef;
+    @ViewChild('gameCanvas', { static: true }) gameCanvas: ElementRef;
 
     constructor() { }
 
