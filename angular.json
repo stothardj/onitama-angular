@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "onitama-angular"
+  "defaultProject": "onitama-angular",
+  "cli": {
+    "analytics": "5e7fbafa-31b5-4982-9113-fce5442ddb23"
+  }
 }
