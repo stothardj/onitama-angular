@@ -14,6 +14,6 @@ export class ClickTarget {
     }
 
     trigger(ev) {
-	return !!this.handler(ev);
+	this.handler(ev);
     }
 }
