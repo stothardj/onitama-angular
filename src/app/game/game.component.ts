@@ -8,18 +8,18 @@ import { Overview } from '../overview';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-    @ViewChild('gameCanvas', { static: true }) gameCanvas: ElementRef;
+  @ViewChild('gameCanvas', { static: true }) gameCanvas: ElementRef;
 
-    constructor() { }
+  constructor() { }
 
-    ngOnInit() {
-	console.log('game on');
-    }
+  ngOnInit() {
+    console.log('game on');
+  }
 
-    ngAfterViewInit() {
-	const canvas = (<HTMLCanvasElement>this.gameCanvas.nativeElement);
-	const ctx = canvas.getContext('2d');
-	const overview = new Overview(canvas, ctx);
-	overview.run();
-    }
+  ngAfterViewInit() {
+    const canvas = (<HTMLCanvasElement>this.gameCanvas.nativeElement);
+    const ctx = canvas.getContext('2d');
+    const overview = new Overview(canvas, ctx);
+    overview.run();
+  }
 }
