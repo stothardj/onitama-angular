@@ -11,7 +11,7 @@ export class Coord {
   y: number;
 
   static fromKey(key) {
-    return new Coord(key % BOARD_SIZE, (key / BOARD_SIZE) | 0);
+    return new Coord(key % BOARD_SIZE, Math.floor(key / BOARD_SIZE));
   }
 
   toKey() {
@@ -23,6 +23,6 @@ export class Coord {
   }
 
   eq(other) {
-    return this.x == other.x && this.y == other.y;
+    return this.x === other.x && this.y === other.y;
   }
 }

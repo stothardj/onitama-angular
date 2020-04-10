@@ -12,6 +12,6 @@ export class Move {
   }
 
   eq(move: Move) {
-    return this.right == move.right && this.down == move.down;
+    return this.right === move.right && this.down === move.down;
   }
 }

@@ -105,11 +105,11 @@ export class Game {
   }
 
   canSelectPiece(piece) {
-    return this.turn == piece.color;
+    return this.turn === piece.color;
   }
 
   canSelectCardSlot(cardSlot: CardSlot) {
-    return this.turn == cardSlot.player;
+    return this.turn === cardSlot.player;
   }
 
   willWin() {
@@ -135,7 +135,7 @@ export class Game {
     const piece = this.getSelectedPiece();
     const card = this.selectedCardSlot.card;
 
-    const flipped = this.turn == RED;
+    const flipped = this.turn === RED;
     if (!card.hasMove(move, flipped)) { return null; }
 
     let winner = null;

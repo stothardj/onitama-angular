@@ -42,7 +42,7 @@ export class CardSlot {
       this.ctx.fillStyle = SELECTED_COLOR;
       this.ctx.fillRect(this.x - 4, this.y - 4, CARD_WIDTH + 8, CARD_HEIGHT + 8);
     }
-    const flipped = this.player == RED || (this.player == null && turn == RED);
+    const flipped = this.player === RED || (this.player == null && turn === RED);
     this.card.draw(this.x, this.y, flipped);
   }
 
