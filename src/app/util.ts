@@ -10,7 +10,7 @@ export function registerClick(ev) {
   for (const target of this.getClickTargets()) {
     if (target.contains(x, y)) {
       const bubble = target.trigger(ev);
-      if (!bubble) break;
+      if (!bubble) { break; }
     }
   }
 }

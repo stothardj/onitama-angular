@@ -1,6 +1,6 @@
 // Includes min and max
 export function randomInt(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function swap(arr, i, j) {
@@ -12,7 +12,7 @@ function swap(arr, i, j) {
 // Shuffles in place
 export function shuffle(arr) {
   for (let i = 0; i < arr.length; i++) {
-    let j = randomInt(i, arr.length - 1);
+    const j = randomInt(i, arr.length - 1);
     swap(arr, i, j);
   }
 }

@@ -29,7 +29,7 @@ export class Grid {
   canvasRect(coord: Coord) {
     return new Rect(this.canvasX(coord.x), // left
       this.canvasY(coord.y), // top
-      this.canvasX(coord.x + 1), //right
+      this.canvasX(coord.x + 1), // right
       this.canvasY(coord.y + 1)); // bottom
   }
 

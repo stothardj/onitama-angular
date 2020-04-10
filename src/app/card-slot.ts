@@ -37,7 +37,7 @@ export class CardSlot {
   }
 
   draw(turn: string) {
-    if (!this.card) return;
+    if (!this.card) { return; }
     if (this.selected) {
       this.ctx.fillStyle = SELECTED_COLOR;
       this.ctx.fillRect(this.x - 4, this.y - 4, CARD_WIDTH + 8, CARD_HEIGHT + 8);

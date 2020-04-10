@@ -69,7 +69,7 @@ export class Game {
   }
 
   getSelectedPiece() {
-    if (this.selectedPieceCoord == null) return null;
+    if (this.selectedPieceCoord == null) { return null; }
     return this.board.getPiece(this.selectedPieceCoord);
   }
 
@@ -79,7 +79,7 @@ export class Game {
   }
 
   deselectPiece() {
-    if (this.selectedPieceCoord == null) return;
+    if (this.selectedPieceCoord == null) { return; }
     this.board.getPiece(this.selectedPieceCoord).selected = false;
     this.selectedPieceCoord = null;
   }
@@ -90,7 +90,7 @@ export class Game {
   }
 
   deselectCardSlot() {
-    if (this.selectedCardSlot == null) return;
+    if (this.selectedCardSlot == null) { return; }
     this.selectedCardSlot.selected = false;
     this.selectedCardSlot = null;
   }
@@ -114,9 +114,9 @@ export class Game {
 
   willWin() {
     const takenPiece = this.board.getPiece(this.board.destinationMarker);
-    if (takenPiece instanceof Master) return true;
+    if (takenPiece instanceof Master) { return true; }
     const selectedPiece = this.getSelectedPiece();
-    if (!(selectedPiece instanceof Master)) return false;
+    if (!(selectedPiece instanceof Master)) { return false; }
     const goal = this.board.goalFor(this.turn);
     return this.board.destinationMarker.eq(goal);
   }
@@ -136,7 +136,7 @@ export class Game {
     const card = this.selectedCardSlot.card;
 
     const flipped = this.turn == RED;
-    if (!card.hasMove(move, flipped)) return null;
+    if (!card.hasMove(move, flipped)) { return null; }
 
     let winner = null;
     if (this.willWin()) {
@@ -176,7 +176,7 @@ export class Game {
 
     this.draw();
 
-    if (winner) this.endGame(winner);
+    if (winner) { this.endGame(winner); }
   }
 
   pieceSelected(data) {
@@ -184,7 +184,7 @@ export class Game {
     const piece = this.board.getPiece(coord);
 
     if (!this.canSelectPiece(piece)) {
-      this.boardSelected({ coord })
+      this.boardSelected({ coord });
       return;
     }
 
@@ -193,28 +193,28 @@ export class Game {
       this.deselectPiece();
     } else {
       const selectedPiece = this.getSelectedPiece();
-      if (selectedPiece) selectedPiece.selected = false;
+      if (selectedPiece) { selectedPiece.selected = false; }
       this.selectPieceAt(coord);
       winner = this.completeMove();
     }
     this.draw();
 
-    if (winner) this.endGame(winner);
+    if (winner) { this.endGame(winner); }
   }
 
   cardSlotSelected(cardSlot: CardSlot) {
-    if (!this.canSelectCardSlot(cardSlot)) return;
+    if (!this.canSelectCardSlot(cardSlot)) { return; }
 
     let winner = null;
     if (cardSlot.selected) {
       this.deselectCardSlot();
     } else {
-      if (this.selectedCardSlot) this.selectedCardSlot.selected = false;
+      if (this.selectedCardSlot) { this.selectedCardSlot.selected = false; }
       this.selectCardSlot(cardSlot);
       winner = this.completeMove();
     }
     this.draw();
 
-    if (winner) this.endGame(winner);
+    if (winner) { this.endGame(winner); }
   }
 }

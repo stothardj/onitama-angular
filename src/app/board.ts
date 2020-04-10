@@ -41,7 +41,7 @@ export class Board {
     this.addPiece(new Coord(middle, 0), new Master(this.ctx, RED));
     this.addPiece(new Coord(middle, bottom), new Master(this.ctx, BLUE));
     for (let i = 0; i < BOARD_SIZE; i++) {
-      if (i == middle) continue;
+      if (i == middle) { continue; }
       this.addPiece(new Coord(i, 0), new Disciple(this.ctx, RED));
       this.addPiece(new Coord(i, bottom), new Disciple(this.ctx, BLUE));
     }

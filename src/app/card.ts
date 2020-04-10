@@ -30,7 +30,7 @@ export class Card {
     this.ctx.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
     this.ctx.strokeStyle = '#000000';
     this.ctx.strokeRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
-    this.ctx.fillStyle = '#000000'
+    this.ctx.fillStyle = '#000000';
     this.ctx.font = '16px serif';
     this.ctx.textBaseline = 'middle';
     this.ctx.textAlign = 'left';
