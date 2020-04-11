@@ -27,7 +27,7 @@ export class Button {
     ];
   }
 
-  draw() {
+  draw(): void {
     this.ctx.fillStyle = '#333333';
     this.ctx.fillRect(this.rect.left, this.rect.top, this.rect.width, this.rect.height);
     this.ctx.fillStyle = '#FFFFFF';
@@ -37,7 +37,7 @@ export class Button {
     this.ctx.fillText(this.text, this.rect.centerX, this.rect.centerY);
   }
 
-  getClickTargets() {
+  getClickTargets(): ClickTarget[] {
     return this.clickTargets;
   }
 }

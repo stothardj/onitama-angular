@@ -64,7 +64,7 @@ export const CARDS: Record<string, CardDef[]> = {
   { 'down': 1 }]
 };
 
-export function getCards(ctx: CanvasRenderingContext2D) {
+export function getCards(ctx: CanvasRenderingContext2D): Card[] {
   const cards = [];
   for (const [name, moves] of Object.entries(CARDS)) {
     const parsedMoves = [];

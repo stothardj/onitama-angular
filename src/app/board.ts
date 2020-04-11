@@ -34,7 +34,7 @@ export class Board {
     this.destinationMarker = null;
   }
 
-  initPieces() {
+  initPieces(): void {
     this.pieces.clear();
     const middle = Math.floor(BOARD_SIZE / 2);
     const bottom = BOARD_SIZE - 1;
@@ -47,23 +47,23 @@ export class Board {
     }
   }
 
-  addPiece(coord: Coord, piece: Piece) {
+  addPiece(coord: Coord, piece: Piece): void {
     this.pieces.set(coord.toKey(), piece);
   }
 
-  movePiece(from: Coord, to: Coord) {
+  movePiece(from: Coord, to: Coord): void {
     const piece = this.pieces.get(from.toKey());
     this.pieces.delete(from.toKey());
     this.pieces.set(to.toKey(), piece);
   }
 
-  goalFor(turn: string) {
+  goalFor(turn: string): Coord {
     const goalX = Math.floor(BOARD_SIZE / 2);
     const goalY = turn === RED ? (BOARD_SIZE - 1) : 0;
     return new Coord(goalX, goalY);
   }
 
-  draw() {
+  draw(): void {
     this.ctx.lineWidth = 1;
     this.ctx.strokeStyle = '#000000';
     this.grid.draw();
@@ -80,7 +80,7 @@ export class Board {
     }
   }
 
-  getClickTargets() {
+  getClickTargets(): ClickTarget[] {
     const targets = [];
     for (const [coordKey, piece] of this.pieces) {
       const coord = Coord.fromKey(coordKey);
@@ -94,12 +94,12 @@ export class Board {
     return targets;
   }
 
-  getPiece(coord: Coord) {
+  getPiece(coord: Coord): Piece {
     const coordKey = coord.toKey();
     return this.pieces.get(coordKey);
   }
 
-  handleClickBoard(ev) {
+  handleClickBoard(ev): void {
     const x = ev.offsetX;
     const y = ev.offsetY;
 
@@ -107,7 +107,7 @@ export class Board {
     this.eventTarget.dispatch(BoardEvents.BOARD_SELECTED, { coord });
   }
 
-  handleClickPiece(coord: Coord) {
+  handleClickPiece(coord: Coord): boolean {
     this.eventTarget.dispatch(BoardEvents.PIECE_SELECTED, { coord });
 
     return false;

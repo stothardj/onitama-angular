@@ -10,19 +10,19 @@ export class Coord {
   x: number;
   y: number;
 
-  static fromKey(key) {
+  static fromKey(key): Coord {
     return new Coord(key % BOARD_SIZE, Math.floor(key / BOARD_SIZE));
   }
 
-  toKey() {
+  toKey(): number {
     return this.x + this.y * BOARD_SIZE;
   }
 
-  moveTo(other) {
+  moveTo(other): Move {
     return new Move(other.x - this.x, other.y - this.y);
   }
 
-  eq(other) {
+  eq(other): boolean {
     return this.x === other.x && this.y === other.y;
   }
 }

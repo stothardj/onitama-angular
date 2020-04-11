@@ -16,11 +16,11 @@ export class Screen {
     this.clickables = [];
   }
 
-  addEventListeners() {
+  addEventListeners(): void {
     this.canvas.addEventListener('click', this.clickListener);
   }
 
-  removeEventListeners() {
+  removeEventListeners(): void {
     this.canvas.removeEventListener('click', this.clickListener);
   }
 

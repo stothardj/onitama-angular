@@ -31,12 +31,12 @@ export class CardSlot {
     this.eventTarget = new EventTarget();
   }
 
-  placeCard(card: Card) {
+  placeCard(card: Card): CardSlot {
     this.card = card;
     return this;
   }
 
-  draw(turn: string) {
+  draw(turn: string): void {
     if (!this.card) { return; }
     if (this.selected) {
       this.ctx.fillStyle = SELECTED_COLOR;
@@ -46,11 +46,11 @@ export class CardSlot {
     this.card.draw(this.x, this.y, flipped);
   }
 
-  getClickTargets() {
+  getClickTargets(): ClickTarget[] {
     return [this.clickTarget];
   }
 
-  handleClick() {
+  handleClick(): void {
     this.eventTarget.dispatch(CardSlotEvents.CARD_SELECTED);
   }
 }

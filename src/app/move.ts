@@ -7,11 +7,11 @@ export class Move {
     this.down = down;
   }
 
-  flip() {
+  flip(): Move {
     return new Move(-this.right, -this.down);
   }
 
-  eq(move: Move) {
+  eq(move: Move): boolean {
     return this.right === move.right && this.down === move.down;
   }
 }

@@ -15,7 +15,7 @@ export class Overview {
     this.ctx = ctx;
   }
 
-  displayTitle() {
+  displayTitle(): void {
     const titleScreen = new TitleScreen(this.canvas, this.ctx);
     titleScreen.draw();
     titleScreen.addEventListeners();
@@ -25,7 +25,7 @@ export class Overview {
     }, TitleScreenEvents.START_GAME);
   }
 
-  startGame() {
+  startGame(): void {
     const board = new Board(this.ctx, 20, 100, 350);
     board.initPieces();
 
@@ -49,7 +49,7 @@ export class Overview {
     }, GameEvents.GAME_WON);
   }
 
-  displayVictory(winner) {
+  displayVictory(winner): void {
     const victoryScreen = new VictoryScreen(this.canvas, this.ctx, winner);
     victoryScreen.draw();
     victoryScreen.addEventListeners();
@@ -59,7 +59,7 @@ export class Overview {
     }, VictoryScreenEvents.RETURN_TO_TITLE);
   }
 
-  run() {
+  run(): void {
     this.displayTitle();
   }
 }

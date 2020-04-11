@@ -26,7 +26,7 @@ export class VictoryScreen extends Screen {
     }, ButtonEvents.CLICKED);
   }
 
-  draw() {
+  draw(): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fillStyle = '#000000';
     this.ctx.font = '50px serif';

@@ -9,11 +9,11 @@ export class ClickTarget {
     this.handler = handler;
   }
 
-  contains(x: number, y: number) {
+  contains(x: number, y: number): boolean {
     return this.bounds.contains(x, y);
   }
 
-  trigger(ev) {
+  trigger(ev): void {
     this.handler(ev);
   }
 }

@@ -13,12 +13,12 @@ export class Card {
     this.moves = moves;
   }
 
-  hasMove(move: Move, flipped: boolean) {
+  hasMove(move: Move, flipped: boolean): boolean {
     const mv = flipped ? move.flip() : move;
     return !!this.moves.find(el => el.eq(mv));
   }
 
-  draw(x: number, y: number, flipped: boolean = false) {
+  draw(x: number, y: number, flipped: boolean = false): void {
     this.ctx.save();
     this.ctx.translate(x, y);
     if (flipped) {

@@ -10,11 +10,11 @@ export class EventTarget {
     this.listeners = [];
   }
 
-  listen(callback: Function, ...eventTypes: string[]) {
+  listen(callback: Function, ...eventTypes: string[]): void {
     this.listeners.push({ callback, eventTypes });
   }
 
-  dispatch(eventType: string, data = null) {
+  dispatch(eventType: string, data = null): void {
     for (const listener of this.listeners) {
       if (listener.eventTypes.includes(eventType)) {
         listener.callback(eventType, data);

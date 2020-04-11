@@ -1,10 +1,10 @@
 import { RED, BLUE } from './constants';
 
-export function nextTurn(turn: string) {
+export function nextTurn(turn: string): string {
   return turn === RED ? BLUE : RED;
 }
 
-export function registerClick(ev) {
+export function registerClick(ev): void {
   const x = ev.offsetX;
   const y = ev.offsetY;
   for (const target of this.getClickTargets()) {

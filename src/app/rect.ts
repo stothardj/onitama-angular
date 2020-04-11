@@ -23,7 +23,7 @@ export class Rect {
     this.centerY = (top + bottom) / 2;
   }
 
-  contains(x: number, y: number) {
+  contains(x: number, y: number): boolean {
     return x >= this.left
       && x <= this.right
       && y >= this.top

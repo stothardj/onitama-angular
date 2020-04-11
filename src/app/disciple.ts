@@ -11,7 +11,7 @@ export class Disciple {
     this.selected = false;
   }
 
-  draw(x: number, y: number, size: number) {
+  draw(x: number, y: number, size: number): void {
     if (this.selected) {
       this.ctx.fillStyle = SELECTED_COLOR;
       this.ctx.beginPath();
