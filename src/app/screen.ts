@@ -1,9 +1,6 @@
+import { Clickable } from './clickable';
 import { ClickTarget } from './click-target';
 import { registerClick } from './util';
-
-interface Clickable {
-  getClickTargets: () => ClickTarget[];
-}
 
 export class Screen {
   canvas: HTMLCanvasElement;
@@ -24,13 +21,12 @@ export class Screen {
     this.canvas.removeEventListener('click', this.clickListener);
   }
 
-  addClickable(child) {
+  addClickable(child: Clickable): void {
     this.clickables.push(child);
-    return child;
   }
 
-  getClickTargets() {
-    let targets = [];
+  getClickTargets(): ClickTarget[] {
+    let targets: ClickTarget[] = [];
     for (const child of this.clickables) {
       targets = targets.concat(child.getClickTargets());
     }

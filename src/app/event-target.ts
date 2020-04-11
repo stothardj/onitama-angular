@@ -14,7 +14,7 @@ export class EventTarget {
     this.listeners.push({ callback, eventTypes });
   }
 
-  dispatch(eventType: string, data = null): void {
+  dispatch(eventType: string, data: any = null): void {
     for (const listener of this.listeners) {
       if (listener.eventTypes.includes(eventType)) {
         listener.callback(eventType, data);

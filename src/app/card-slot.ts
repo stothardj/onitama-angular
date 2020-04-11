@@ -12,13 +12,13 @@ export class CardSlot {
   ctx: CanvasRenderingContext2D;
   x: number;
   y: number;
-  player: string;
-  card: Card;
+  player: string | null;
+  card: Card | null;
   selected: boolean;
   clickTarget: ClickTarget;
   eventTarget: EventTarget;
 
-  constructor(ctx: CanvasRenderingContext2D, x: number, y: number, player: string) {
+  constructor(ctx: CanvasRenderingContext2D, x: number, y: number, player: string | null) {
     this.ctx = ctx;
     this.x = x;
     this.y = y;

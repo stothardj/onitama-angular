@@ -1,3 +1,4 @@
+import { Clickable } from './clickable';
 import { ClickTarget } from './click-target';
 import { EventTarget } from './event-target';
 import { Rect } from './rect';
@@ -6,7 +7,7 @@ export const ButtonEvents = {
   CLICKED: 'clicked',
 };
 
-export class Button {
+export class Button implements Clickable {
   ctx: CanvasRenderingContext2D;
   text: string;
   rect: Rect;

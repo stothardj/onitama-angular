@@ -64,13 +64,25 @@ export const CARDS: Record<string, CardDef[]> = {
   { 'down': 1 }]
 };
 
+function getRight(move: CardDef): number {
+  if (move.right) { return move.right; }
+  if (move.left) { return -move.left; }
+  return 0;
+}
+
+function getDown(move: CardDef): number {
+  if (move.down) { return move.down; }
+  if (move.up) { return -move.up; }
+  return 0;
+}
+
 export function getCards(ctx: CanvasRenderingContext2D): Card[] {
-  const cards = [];
+  const cards: Card[] = [];
   for (const [name, moves] of Object.entries(CARDS)) {
-    const parsedMoves = [];
+    const parsedMoves: Move[] = [];
     for (const move of moves) {
-      const right = move.right || -move.left || 0;
-      const down = move.down || -move.up || 0;
+      const right = getRight(move);
+      const down = getDown(move);
       parsedMoves.push(new Move(right, down));
     }
     cards.push(new Card(ctx, name, parsedMoves));

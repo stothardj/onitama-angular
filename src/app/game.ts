@@ -1,11 +1,13 @@
 import { Board, BoardEvents } from './board';
 import { Card } from './card';
 import { CardSlot, CardSlotEvents } from './card-slot';
+import { ClickTarget } from './click-target';
 import { Coord } from './coord';
 import { EventTarget } from './event-target';
-import { nextTurn, registerClick } from './util';
 import { Master } from './master';
+import { Piece } from './piece';
 import { RED } from './constants';
+import { nextTurn, registerClick } from './util';
 
 export const GameEvents = {
   GAME_WON: 'game-won',
@@ -18,8 +20,8 @@ export class Game {
   cardSlots: CardSlot[];
   turn: string;
   neutralCardSlot: CardSlot;
-  selectedPieceCoord: Coord;
-  selectedCardSlot: CardSlot;
+  selectedPieceCoord: Coord | null;
+  selectedCardSlot: CardSlot | null;
   eventTarget: EventTarget;
   clickListener: (Event) => void;
 
@@ -30,7 +32,7 @@ export class Game {
     this.cardSlots = cardSlots;
     this.turn = turn;
 
-    this.neutralCardSlot = this.cardSlots.find(cardSlot => cardSlot.player == null);
+    this.neutralCardSlot = this.cardSlots.find(cardSlot => cardSlot.player == null)!;
 
     this.selectedPieceCoord = null;
     this.selectedCardSlot = null;
@@ -46,13 +48,13 @@ export class Game {
     this.clickListener = registerClick.bind(this);
   }
 
-  dealCards(cards: Card[]) {
+  dealCards(cards: Card[]): void {
     for (let i = 0; i < this.cardSlots.length; i++) {
       this.cardSlots[i].placeCard(cards[i]);
     }
   }
 
-  draw() {
+  draw(): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.board.draw();
     for (const cardSlot of this.cardSlots) {
@@ -60,43 +62,43 @@ export class Game {
     }
   }
 
-  addEventListeners() {
+  addEventListeners(): void {
     this.canvas.addEventListener('click', this.clickListener);
   }
 
-  removeEventListeners() {
+  removeEventListeners(): void {
     this.canvas.removeEventListener('click', this.clickListener);
   }
 
-  getSelectedPiece() {
+  getSelectedPiece(): Piece | null {
     if (this.selectedPieceCoord == null) { return null; }
     return this.board.getPiece(this.selectedPieceCoord);
   }
 
-  selectPieceAt(coord) {
+  selectPieceAt(coord: Coord): void {
     this.selectedPieceCoord = coord;
     this.board.getPiece(coord).selected = true;
   }
 
-  deselectPiece() {
+  deselectPiece(): void {
     if (this.selectedPieceCoord == null) { return; }
     this.board.getPiece(this.selectedPieceCoord).selected = false;
     this.selectedPieceCoord = null;
   }
 
-  selectCardSlot(cardSlot: CardSlot) {
+  selectCardSlot(cardSlot: CardSlot): void {
     this.selectedCardSlot = cardSlot;
     cardSlot.selected = true;
   }
 
-  deselectCardSlot() {
+  deselectCardSlot(): void {
     if (this.selectedCardSlot == null) { return; }
     this.selectedCardSlot.selected = false;
     this.selectedCardSlot = null;
   }
 
-  getClickTargets() {
-    const targets = [];
+  getClickTargets(): ClickTarget[] {
+    const targets: ClickTarget[] = [];
     targets.push(...this.board.getClickTargets());
     for (const cardSlot of this.cardSlots) {
       targets.push(...cardSlot.getClickTargets());
@@ -104,15 +106,16 @@ export class Game {
     return targets;
   }
 
-  canSelectPiece(piece) {
+  canSelectPiece(piece): boolean {
     return this.turn === piece.color;
   }
 
-  canSelectCardSlot(cardSlot: CardSlot) {
+  canSelectCardSlot(cardSlot: CardSlot): boolean {
     return this.turn === cardSlot.player;
   }
 
-  willWin() {
+  willWin(): boolean {
+    if (this.board.destinationMarker == null) { return false; }
     const takenPiece = this.board.getPiece(this.board.destinationMarker);
     if (takenPiece instanceof Master) { return true; }
     const selectedPiece = this.getSelectedPiece();
@@ -122,7 +125,7 @@ export class Game {
   }
 
   // Returns the winner, or null if the game is not over yet.
-  completeMove() {
+  completeMove(): string | null {
     if (this.selectedPieceCoord == null
       || this.selectedCardSlot == null
       || this.board.destinationMarker == null) {
@@ -132,20 +135,20 @@ export class Game {
     const move = this.selectedPieceCoord.moveTo(this.board.destinationMarker);
     // Important to save the piece as a local var so we don't lose track of it
     // as we move things around.
-    const piece = this.getSelectedPiece();
-    const card = this.selectedCardSlot.card;
+    const piece: Piece = this.getSelectedPiece()!;
+    const card: Card = this.selectedCardSlot.card!;
 
     const flipped = this.turn === RED;
     if (!card.hasMove(move, flipped)) { return null; }
 
-    let winner = null;
+    let winner: string | null = null;
     if (this.willWin()) {
       winner = this.turn;
     }
 
     this.board.movePiece(this.selectedPieceCoord, this.board.destinationMarker);
 
-    const neutralCard = this.neutralCardSlot.card;
+    const neutralCard = this.neutralCardSlot.card!;
 
     this.selectedCardSlot.placeCard(neutralCard);
     this.neutralCardSlot.placeCard(card);
@@ -188,7 +191,7 @@ export class Game {
       return;
     }
 
-    let winner = null;
+    let winner: string | null = null;
     if (piece.selected) {
       this.deselectPiece();
     } else {
@@ -205,7 +208,7 @@ export class Game {
   cardSlotSelected(cardSlot: CardSlot) {
     if (!this.canSelectCardSlot(cardSlot)) { return; }
 
-    let winner = null;
+    let winner: string | null = null;
     if (cardSlot.selected) {
       this.deselectCardSlot();
     } else {

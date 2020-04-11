@@ -21,7 +21,7 @@ export class Board {
   size: number;
   grid: Grid;
   eventTarget: EventTarget;
-  destinationMarker: Coord;
+  destinationMarker: Coord | null;
 
   constructor(ctx: CanvasRenderingContext2D, x: number, y: number, size: number) {
     this.ctx = ctx;
@@ -52,7 +52,7 @@ export class Board {
   }
 
   movePiece(from: Coord, to: Coord): void {
-    const piece = this.pieces.get(from.toKey());
+    const piece = this.pieces.get(from.toKey())!;
     this.pieces.delete(from.toKey());
     this.pieces.set(to.toKey(), piece);
   }
@@ -81,7 +81,7 @@ export class Board {
   }
 
   getClickTargets(): ClickTarget[] {
-    const targets = [];
+    const targets: ClickTarget[] = [];
     for (const [coordKey, piece] of this.pieces) {
       const coord = Coord.fromKey(coordKey);
       targets.push(new ClickTarget(
@@ -96,7 +96,7 @@ export class Board {
 
   getPiece(coord: Coord): Piece {
     const coordKey = coord.toKey();
-    return this.pieces.get(coordKey);
+    return this.pieces.get(coordKey)!;
   }
 
   handleClickBoard(ev): void {

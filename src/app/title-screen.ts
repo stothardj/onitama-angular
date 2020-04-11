@@ -17,9 +17,9 @@ export class TitleScreen extends Screen {
     super(canvas);
     this.ctx = ctx;
     this.eventTarget = new EventTarget();
-    this.newGameButton = this.addClickable(
-      new Button(ctx, 'New Game',
-        new Rect(100, 200, this.canvas.width - 100, 300)));
+    this.newGameButton = new Button(ctx, 'New Game',
+				    new Rect(100, 200, this.canvas.width - 100, 300))
+    this.addClickable(this.newGameButton);
     this.newGameButton.eventTarget.listen(() => {
       this.eventTarget.dispatch(TitleScreenEvents.START_GAME);
     }, ButtonEvents.CLICKED);
