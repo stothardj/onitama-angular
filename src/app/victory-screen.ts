@@ -19,7 +19,7 @@ export class VictoryScreen extends Screen {
     this.winner = winner;
     this.eventTarget = new EventTarget();
     this.titleButton = new Button(ctx, 'Return to Title',
-				  new Rect(100, 200, this.canvas.width - 100, 300));
+      new Rect(100, 200, this.canvas.width - 100, 300));
     this.addClickable(this.titleButton);
     this.titleButton.eventTarget.listen(() => {
       this.eventTarget.dispatch(VictoryScreenEvents.RETURN_TO_TITLE);

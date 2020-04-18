@@ -46,9 +46,9 @@ export class Card {
     this.ctx.fillRect(grid.canvasX(middle), grid.canvasY(middle), grid.cellSize, grid.cellSize);
     this.ctx.fillStyle = '#555555';
     for (const move of this.moves) {
-      const x = middle + move.right;
-      const y = middle + move.down;
-      this.ctx.fillRect(grid.canvasX(x), grid.canvasY(y), grid.cellSize, grid.cellSize);
+      const gx = middle + move.right;
+      const gy = middle + move.down;
+      this.ctx.fillRect(grid.canvasX(gx), grid.canvasY(gy), grid.cellSize, grid.cellSize);
     }
     this.ctx.restore();
   }

@@ -18,7 +18,10 @@ export class GameComponent implements OnInit {
 
   ngAfterViewInit() {
     const canvas = (<HTMLCanvasElement>this.gameCanvas.nativeElement);
-    const ctx = canvas.getContext('2d')!;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      throw new Error('Could not create 2d context');
+    }
     const overview = new Overview(canvas, ctx);
     overview.run();
   }

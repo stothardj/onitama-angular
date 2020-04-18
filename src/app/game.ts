@@ -32,7 +32,11 @@ export class Game {
     this.cardSlots = cardSlots;
     this.turn = turn;
 
-    this.neutralCardSlot = this.cardSlots.find(cardSlot => cardSlot.player == null)!;
+    const neutralSlot = this.cardSlots.find(cardSlot => cardSlot.player == null);
+    if (!neutralSlot) {
+      throw new Error('Could not find neutral card slot');
+    }
+    this.neutralCardSlot = neutralSlot;
 
     this.selectedPieceCoord = null;
     this.selectedCardSlot = null;
@@ -72,17 +76,23 @@ export class Game {
 
   getSelectedPiece(): Piece | null {
     if (this.selectedPieceCoord == null) { return null; }
-    return this.board.getPiece(this.selectedPieceCoord);
+    return this.board.getPiece(this.selectedPieceCoord) || null;
   }
 
   selectPieceAt(coord: Coord): void {
     this.selectedPieceCoord = coord;
-    this.board.getPiece(coord).selected = true;
+    const piece = this.board.getPiece(coord);
+    if (piece) {
+      piece.selected = true;
+    }
   }
 
   deselectPiece(): void {
     if (this.selectedPieceCoord == null) { return; }
-    this.board.getPiece(this.selectedPieceCoord).selected = false;
+    const piece = this.board.getPiece(this.selectedPieceCoord);
+    if (piece) {
+      piece.selected = false;
+    }
     this.selectedPieceCoord = null;
   }
 
@@ -135,8 +145,14 @@ export class Game {
     const move = this.selectedPieceCoord.moveTo(this.board.destinationMarker);
     // Important to save the piece as a local var so we don't lose track of it
     // as we move things around.
-    const piece: Piece = this.getSelectedPiece()!;
-    const card: Card = this.selectedCardSlot.card!;
+    const piece = this.getSelectedPiece();
+    if (!piece) {
+      return null;
+    }
+    const card = this.selectedCardSlot.card;
+    if (!card) {
+      return null;
+    }
 
     const flipped = this.turn === RED;
     if (!card.hasMove(move, flipped)) { return null; }
@@ -148,7 +164,10 @@ export class Game {
 
     this.board.movePiece(this.selectedPieceCoord, this.board.destinationMarker);
 
-    const neutralCard = this.neutralCardSlot.card!;
+    const neutralCard = this.neutralCardSlot.card;
+    if (!neutralCard) {
+      return null;
+    }
 
     this.selectedCardSlot.placeCard(neutralCard);
     this.neutralCardSlot.placeCard(card);
@@ -185,6 +204,10 @@ export class Game {
   pieceSelected(data) {
     const coord = data.coord;
     const piece = this.board.getPiece(coord);
+
+    if (!piece) {
+      return;
+    }
 
     if (!this.canSelectPiece(piece)) {
       this.boardSelected({ coord });

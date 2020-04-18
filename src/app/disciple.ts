@@ -18,10 +18,13 @@ export class Disciple {
       this.ctx.arc(x + size / 2, y + size / 2, size / 2, 0, Math.PI * 2);
       this.ctx.fill();
     }
+    this.ctx.fillStyle = '#ffffff';
     this.ctx.strokeStyle = this.color;
     this.ctx.lineWidth = 2;
     this.ctx.beginPath();
     this.ctx.arc(x + size / 2, y + size / 2, size / 2 - 5, 0, Math.PI * 2);
+    this.ctx.closePath();
+    this.ctx.fill();
     this.ctx.stroke();
   }
 }
