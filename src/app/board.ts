@@ -31,7 +31,7 @@ export class Board {
     this.x = x;
     this.y = y;
     this.size = size;
-    this.grid = new Grid(this.ctx, x + LABELING_SPACE, y + LABELING_SPACE, size - LABELING_SPACE, BOARD_SIZE);
+    this.grid = new Grid(this.ctx, x + LABELING_SPACE, y, size - LABELING_SPACE, BOARD_SIZE);
     this.eventTarget = new EventTarget();
     this.destinationMarker = null;
   }
@@ -68,14 +68,14 @@ export class Board {
   }
 
   draw(): void {
-    this.ctx.font = '16px helvectica';
+    this.ctx.font = 'bold 24px helvectica';
     this.ctx.textBaseline = 'middle';
     this.ctx.textAlign = 'center';
     this.ctx.fillStyle = '#000000';
     const aCharCode = 'a'.charCodeAt(0);
     for (let i = 0; i < this.grid.cells; i++) {
-      this.ctx.fillText((i + 1).toString(), this.x + LABELING_SPACE / 2, this.grid.canvasY(BOARD_SIZE - i - 1) + this.grid.cellSize / 2);
-      this.ctx.fillText(String.fromCharCode(aCharCode + i), this.grid.canvasX(i) + this.grid.cellSize / 2, this.y + LABELING_SPACE / 2);
+      this.ctx.fillText((i + 1).toString(), this.x + LABELING_SPACE / 2, this.grid.canvasY(BOARD_SIZE - i) - this.grid.cellSize / 2);
+      this.ctx.fillText(String.fromCharCode(aCharCode + i), this.grid.canvasX(i) + this.grid.cellSize / 2, this.y + this.size - LABELING_SPACE / 2);
     }
 
     for (let x = 0; x < this.grid.cells; x++) {
